@@ -17,7 +17,7 @@ function shuffleArray(array) {
 }
 
 function getValues() {
-  return shuffleArray(data).slice(0, 2);
+  return shuffleArray(data).slice(0, 10);
 }
 
 const Component = () => {
