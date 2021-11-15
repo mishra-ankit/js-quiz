@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef } from "react";
 import "./styles.css";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import data from "./data";
@@ -16,13 +16,19 @@ function shuffleArray(array) {
   return array;
 }
 
+function getValues() {
+  return shuffleArray(data).slice(0, 2);
+}
+
 const Component = () => {
   const [index, setIndex] = useState(0);
+  const [done, setDone] = useState(false);
   const [selected, setSelected] = useState(INITIAL_SELECTION);
-  const shuffledData = useMemo(() => shuffleArray(data).slice(0, 5), []);
+  const [score, setScore] = useState(0);
+  const quizData = useRef(getValues());
+  const shuffledData = useMemo(() => quizData.current, [quizData]);
   const { code, ques, opt, ans, details } = shuffledData[index];
   const isAnswered = useMemo(() => selected !== INITIAL_SELECTION, [selected]);
-  const [score, setScore] = useState(0);
 
   const selectOption = (index) => {
     setSelected(index);
@@ -32,8 +38,27 @@ const Component = () => {
     }
   };
 
-  if (shuffledData.length === index + 1) {
-    return `Final Score : ${score}`;
+  if (done) {
+    return (
+      <div className="result_box">
+        <h2>Well Done!</h2>
+        <h2>
+          You scored {score} of {shuffledData.length}
+        </h2>
+        <button
+          className="restart_button"
+          onClick={() => {
+            quizData.current = getValues();
+            setSelected(INITIAL_SELECTION);
+            setIndex(0);
+            setScore(0);
+            setDone(false);
+          }}
+        >
+          Restart
+        </button>
+      </div>
+    );
   }
 
   return (
@@ -67,6 +92,7 @@ const Component = () => {
                 isSelected ? "selected" : ""
               } ${isCorrect ? "correct" : "wrong"}`}
             >
+              {"isCorrect " + isCorrect}
               <input
                 type="radio"
                 id={`ans-${optionIndex}`}
@@ -106,8 +132,12 @@ const Component = () => {
             <button
               className="next"
               onClick={() => {
-                setIndex(index + 1);
-                setSelected(INITIAL_SELECTION);
+                if (index + 1 < shuffledData.length) {
+                  setIndex(index + 1);
+                  setSelected(INITIAL_SELECTION);
+                } else {
+                  setDone(true);
+                }
               }}
             >
               Next >>

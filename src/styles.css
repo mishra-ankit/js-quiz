@@ -98,3 +98,34 @@ details[open] summary {
   height: 3px;
   background: #007bff;
 }
+
+.restart_button {
+  margin: 0 10px;
+  height: 45px;
+  padding: 0 20px;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid #007bff;
+  transition: all 0.3s ease;
+  color: #fff;
+  background: #007bff;
+}
+
+.result_box {
+  background: #fff;
+  border-radius: 5px;
+  display: flex;
+  width: 70%;
+  margin: 10% auto;
+  padding: 25px 30px;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 1;
+  z-index: 5;
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+}
