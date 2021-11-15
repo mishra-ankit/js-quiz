@@ -92,7 +92,6 @@ const Component = () => {
                 isSelected ? "selected" : ""
               } ${isCorrect ? "correct" : "wrong"}`}
             >
-              {"isCorrect " + isCorrect}
               <input
                 type="radio"
                 id={`ans-${optionIndex}`}
